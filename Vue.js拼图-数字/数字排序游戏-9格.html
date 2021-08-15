@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+	<div id="app" class="box">
+        <div class="btn-reset1">
+		    <span v-text="'累计移动:'+stepCount+'步'"></span>
+		</div>	
+	    <ul class="puzzle-wrap">
+            <li :class="{'puzzle': true, 'puzzle-empty': !puzzle}" v-for="(puzzle,index) in puzzles" :key="index" @click="moveFn(index)">
+		        {{puzzle}}
+	        </li>
+        </ul>
+		<div class="btn">
+	        <button class="btn-reset" @click="render()">点此加载游戏</button>
+		</div>	
+		<p class="fon" v-show="ok">恭喜,闯关成功!(*_*)</p>
+	</div>	
+	<div class="box1">
+		<p>玩法：点击空格旁的数字进行移动，按顺序排列1-8数字</p>
+	</div>		
+	
+<script>
+var app = new Vue({
+  el: "#app",
+  data: {
+    puzzles: [1,2,3,4,5,6,7,8,,],
+	ok: false,
+	stepCount: 0,
+	onload(){this.render()},
+  },
+  methods: {
+    render() {
+      let puzzleArr = [],
+        i = 1;
+      for (i; i < 9; i++) {
+        puzzleArr.push(i);
+      }
+      puzzleArr = puzzleArr.sort(() => {
+        return Math.random() - 0.5;
+      });
+      this.puzzles = puzzleArr;
+      this.puzzles.push("");
+	  this.ok = false;
+	  this.stepCount = 0;
+    },
+    moveFn(index) {
+      let curNum = this.puzzles[index],
+        leftNum = this.puzzles[index - 1],
+        rightNum = this.puzzles[index + 1],
+        topNum = this.puzzles[index - 3],
+        bottomNum = this.puzzles[index + 3];
+      if (leftNum === "") {
+        this.$set(this.puzzles, index - 1, curNum);
+        this.$set(this.puzzles, index, "");
+      } else if (rightNum === "") {
+        this.$set(this.puzzles, index + 1, curNum);
+        this.$set(this.puzzles, index, "");
+      } else if (topNum === "") {
+        this.$set(this.puzzles, index - 3, curNum);
+        this.$set(this.puzzles, index, "");
+      } else if (bottomNum === "") {
+        this.$set(this.puzzles, index + 3, curNum);
+        this.$set(this.puzzles, index, "");
+      }
+	  this.stepCount++;
+      this.passFn();
+    },
+    passFn() {
+      if (this.puzzles[8] === "") {
+        const newPuzzles = this.puzzles.slice(0, 8);
+        const isPass = newPuzzles.every((e, i) => e === i + 1);
+        if (isPass) {
+		  this.puzzles = [1,2,3,4,5,6,7,8,'(*_*)']
+		  this.ok = true
+        }
+      }
+    },
+    ready() {
+      this.render();
+    }
+  }
+});
+</script>
+<style>
+.box {
+  width: 400px;
+  height: 450px;
+  background: #f90;
+  border: 3px solid #ccc;
+  box-shadow: 1px 1px 4px;
+  margin:0px auto 0;
+}
+.box1 {
+  width: 400px;
+  height: 50px;
+  background: #f90;
+  border: 3px solid #ccc;
+  box-shadow: 1px 1px 4px;
+  margin: 0px auto 0;
+}
+.puzzle-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 300px;
+  margin-bottom: 40px;
+  padding: 0;
+  background: ;
+  list-style: none;
+  margin:10px auto 0;
+}
+.puzzle {
+  width: 98px;
+  height: 98px;
+  font-size: 20px;
+  background: #f90;
+  text-align: center;
+  line-height: 100px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 4px;
+  text-shadow: 1px 1px 1px #B9B4B4;
+  cursor: pointer;
+} 
+.puzzle-empty {
+  background: ;
+  box-shadow: inset 0px 0px 15px;
+}
+ .btn {
+display: flex;
+justify-content: center;
+}
+.btn-reset {
+  width: 300px;
+  height: 40px;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 0px;
+  background: #f90;
+  margin:10px auto 0;
+}
+.btn-reset1 {
+  width: 300px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  box-shadow: inset 1px 1px 1px;
+  background: #f90;
+  margin: 5px auto 0;
+}
+.fon {
+  text-align: center;
+}
+</style>
+</body>
+</html>

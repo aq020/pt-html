@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Js拼图</title>
+	</head>
+	<body onload="reset()">
+		<div class="box1">
+			<div class="box">
+				<div class="tu">
+					<div class="p1" id="7" onclick="change(7)"></div>
+					<div class="p2" id="8" onclick="change(8)"></div>
+					<div class="p3" id="9" onclick="change(9)"></div>
+					<div class="p4" id="12" onclick="change(12)"></div>
+					<div class="p5" id="13" onclick="change(13)"></div>
+					<div class="p6" id="14" onclick="change(14)"></div>
+					<div class="p7" id="17" onclick="change(17)"></div>
+					<div class="p8" id="18" onclick="change(18)"></div>
+					<div class="p9" id="19" onclick="change(19)"></div>
+				</div>
+				<div class="btu">
+					<button class="btu-reset" onclick="reset()">重置</button>
+				</div>
+			</div>
+			<div class="box">
+				<div class="tu" style="width: 300px;height: 300px; background-image: url('./3a.png');"></div>
+				<p style="text-align: center;"> 原图</p>
+			</div>
+		</div>
+		<script>
+			function reset() {
+				document.getElementById(19).innerHTML = '';
+				let arrid = [7, 8, 9, 12, 13, 14, 17, 18, 19];
+				let arr = [];
+				while (arr.length < 8) {
+					let ran = Math.round(Math.random() * 10) + 1;
+					if (arr.indexOf(ran) < 0 && ran < 9) {
+						arr.push(ran);
+					}
+				}
+				for (i = 0; i < arrid.length; i++) {
+					document.getElementById(arrid[i]).innerHTML = arr[i];
+					document.getElementById(arrid[i]).className = contactImage(arr[i]);
+				}
+				document.getElementById(19).innerHTML = '';
+			}
+
+			function change(id) {
+				let temp = id;
+				let tempvalue = document.getElementById(id).innerHTML;
+				let arr = [7, 8, 9, 12, 13, 14, 17, 18, 19];
+				let arrtemp = [id + 1, id - 1, id + 5, id - 5];
+				for (let i = 0; i < arrtemp.length; i++) {
+					if (arr.indexOf(arrtemp[i]) >= 0) {
+						if (!document.getElementById(arrtemp[i]).innerHTML) {
+							document.getElementById(arrtemp[i]).innerHTML = tempvalue;
+							document.getElementById(arrtemp[i]).className = contactImage(tempvalue);
+							document.getElementById(temp).innerHTML = ''
+							document.getElementById(temp).className = 'white';
+
+						}
+					}
+				}
+				checkResult();
+			}
+
+			function checkResult() {
+				let arr = [7, 8, 9, 12, 13, 14, 17, 18];
+				let pass = [1, 2, 3, 4, 5, 6, 7, 8];
+				for (let i = 0; i < arr.length; i++) {
+					let temp = document.getElementById(arr[i]).innerHTML;
+					if (pass[i] == temp) {
+						if (i == 7) {
+							alert('恭喜完成拼图！')
+							document.getElementById(19).className = 'p9';
+						}
+					} else break;
+
+				}
+			}
+
+			function pass() {
+				let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+				let arrid = [7, 8, 9, 12, 13, 14, 17, 18];
+				for (i = 0; i < arrid.length; i++) {
+					document.getElementById(arrid[i]).innerHTML = arr[i];
+					document.getElementById(arrid[i]).className = contactImage(arr[i]);
+				}
+				document.getElementById(19).innerHTML = '';
+			}
+
+			function contactImage(id) {
+				let temp = 'p' + id;
+				return temp;
+			}
+		</script>
+		<style>
+			.box1 {
+				display: flex;
+				flex-wrap: nowrap;
+				width: 700px;
+				height: 700px;
+				margin-bottom: 20px;
+				padding: 0;
+				list-style: none;
+				margin: 10px auto 0;
+			}
+
+			.box {
+				width: 400px;
+				height: 400px;
+				border: 3px solid #ccc;
+				box-shadow: 1px 1px 4px;
+				margin: 0px auto 0;
+			}
+
+			.tu {
+				display: flex;
+				flex-wrap: wrap;
+				width: 306px;
+				height: 300px;
+				margin-bottom: 20px;
+				padding: 0;
+				list-style: none;
+				margin: 10px auto 0;
+			}
+
+			.btu {
+				display: flex;
+				justify-content: center;
+			}
+
+			.btu-reset {
+				width: 300px;
+				height: 40px;
+				text-align: center;
+				border: 1px solid #ccc;
+				box-shadow: 1px 1px 0px;
+				margin: 10px auto 0;
+			}
+
+			.white {
+				width: 100px;
+				height: 100px;
+				background: white;
+				border: 1px solid white;
+				box-shadow: inset 0px 0px 3px;
+			}
+
+			.p1 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: 0px 0px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p2 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -100px 0px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p3 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -200px 0px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p4 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: 0px -100px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p5 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -100px -100px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p6 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -200px -100px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p7 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: 0px -200px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p8 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -100px -200px;
+				border: 1px solid white;
+				color: white;
+			}
+
+			.p9 {
+				background-image: url('./3a.png');
+				width: 100px;
+				height: 100px;
+				background-position: -200px -200px;
+				border: 1px solid white;
+			}
+		</style>
+	</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset = "utf-8">
+  <title>light1</title> 
+  <script src="https://cdn.staticfile.org/vue/2.4.2/vue.min.js"></script>
+</head>
+<body>
+  <div id= "app" class= "box">
+        <p class= "box1">点击灯泡就可以打开或关闭这盏灯</p>
+	    <div class= "box1">
+	        <img :src="src" width="150px" height="250px" @click="change">
+	    </div>
+  </div>
+<script>
+   var app = new Vue ({
+        el: '#app',
+        data: {
+		    src: './logo11.png' ,
+			value: true
+		},
+        methods:{
+		    change(){
+			    const t = this;
+			    t.value = !t.value;			    
+			    if(t.value === true){
+				    t.src = './logo11.png'; 
+				}
+                else {
+				    t.src = './logo12.png'; 
+				}				
+			} 
+		}		
+   }) 
+</script>
+<style>
+.box {
+	width: 400px;
+	height: 400px;
+	border: 3px solid #ccc;
+	box-shadow: 1px 1px 4px;
+	margin: 0px auto 0;
+}
+.box1{
+    display: flex;
+	justify-content: center;
+}
+</style>
+</body>
+</html>
